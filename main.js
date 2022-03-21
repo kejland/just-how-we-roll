@@ -48,7 +48,43 @@ d20.src = "images/start/d20.jpg";
 /*******************
  * EVENT LISTENERS *
  *******************/
+let restart = document.querySelector("#reset-button");
+
+restart.addEventListener("click", function(){
+
+  sixes.splice(0, sixes.length);   
+  doubleSixes.splice(0, doubleSixes.length);
+  twelves.splice(0, twelves.length);
+  twenties.splice(0, twenties.length);
+
+  d6Mean.innerText = "";
+  d6Median.innerText = "";
+  d6Mode.innerText = "";
+  //console.log(sixes);
+
+  d6twoMean.innerText = "";
+  d6twoMedian.innerText = "";
+  d6twoMode.innerText = "";
+
+  d12Mean.innerText = "";
+  d12Median.innerText = "";
+  d12Mode.innerText = "";
+
+  d20Mean.innerText = "";
+  d20Median.innerText = "";
+  d20Mode.innerText = "";
+
+  d6.src = "images/start/d6.png";
+  d6one.src = "images/start/d6.png";
+  d6two.src = "images/start/d6.png";
+  d12.src = "images/start/d12.jpeg";
+  d20.src = "images/start/d20.jpg";
+
+})
+//=======================================================================
+
 let d6button = document.querySelector("#d6-button");
+
 let d6Mean = document.querySelector("#d6-rolls-mean");
 let d6Median = document.querySelector("#d6-rolls-median");
 let d6Mode = document.querySelector("#d6-rolls-mode");
@@ -75,11 +111,17 @@ d6button.addEventListener("click", function(){
   d6Mean.innerText = getMean(sixes);
   d6Median.innerText = getMedian(sixes);
   d6Mode.innerText = getMode(sixes);
+
+  //console.log(sixes);
 })
 
 
 //double dice:
 let doubleDice = document.querySelector("#double-d6-buttons");
+
+let d6twoMean = document.querySelector("#double-d6-rolls-mean");
+let d6twoMedian = document.querySelector("#double-d6-rolls-median");
+let d6twoMode = document.querySelector("#double-d6-rolls-mode");
 
 doubleDice.addEventListener("click", function(){
   let output = getRandomNumber(6);
@@ -112,13 +154,23 @@ doubleDice.addEventListener("click", function(){
   } else if (output2 === 6){
     d6two.src = "images/d6/6.png";
   }
+  
 
   doubleSixes.push(output);
   doubleSixes.push(output2);
+
+  d6twoMean.innerText = getMean(doubleSixes);
+  d6twoMedian.innerText = getMedian(doubleSixes);
+  d6twoMode.innerText = getMode(doubleSixes);
+  
 })
 
 //12 sided dice:
 let d12button = document.querySelector("#d12-button");
+
+let d12Mean = document.querySelector("#d12-rolls-mean");
+let d12Median = document.querySelector("#d12-rolls-median");
+let d12Mode = document.querySelector("#d12-rolls-mode");
 
 d12button.addEventListener("click", function(){
   let output = getRandomNumber(12);
@@ -148,11 +200,21 @@ d12button.addEventListener("click", function(){
   } else if (output === 12){
     d12.src = "images/numbers/12.png";
   }
+
+  twelves.push(output);
+
+  d12Mean.innerText = getMean(twelves);
+  d12Median.innerText = getMedian(twelves);
+  d12Mode.innerText = getMode(twelves);
 })
 
 
 //20 sided dice:
 let d20button = document.querySelector("#d20-button");
+
+let d20Mean = document.querySelector("#d20-rolls-mean");
+let d20Median = document.querySelector("#d20-rolls-median");
+let d20Mode = document.querySelector("#d20-rolls-mode");
 
 d20button.addEventListener("click", function(){
   let output = getRandomNumber(20);
@@ -198,6 +260,12 @@ d20button.addEventListener("click", function(){
   } else if (output === 20){
     d20.src = "images/numbers/20.png";
   }
+
+  twenties.push(output);
+
+  d20Mean.innerText = getMean(twenties);
+  d20Median.innerText = getMedian(twenties);
+  d20Mode.innerText = getMode(twenties);
 })
 
 /******************
@@ -248,7 +316,7 @@ function getMedian(array){
   
 }
 
-function getMode(){
+function getMode(array){
   //create object:
 
   let countObject = {};
@@ -266,7 +334,7 @@ function getMode(){
    //create keys for each number in the array:
    for (let number of array){
      if (countObject[number] >= 1){
-        countObject[number]++
+        countObject[number]++;
      } else {
         countObject[number] = 1;
      }//use bracket syntax instead of dot syntax to interpret and find the number (rather than dot syntax which would look for a key called "number")
@@ -280,9 +348,11 @@ function getMode(){
    for (let number of keys){
      let value = countObject[number];
 
-     if (value > highestcount){
+     if (value > highestCount){
        highestCount = value;
        highestUniqueNumber = number;
      }
    }
+
+   return highestUniqueNumber;
 }
